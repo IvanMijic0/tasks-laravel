@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Symfony\Component\HttpFoundation\Response as ResponseAlias;
 
 /*
 |--------------------------------------------------------------------------
@@ -79,14 +78,8 @@ Route::get('/tasks', function () use ($tasks) {
 })->name('tasks.index');
 
 Route::get('/tasks/{id}', function ($id) use ($tasks) {
-    $task = collect($tasks)
-        ->firstWhere('id', $id);
-
-    if (!$task) {
-        abort(ResponseAlias::HTTP_NOT_FOUND);
-    }
 
     return view('show', [
-        'task' => $task
+        'task' => \App\Models\Task::find($id)
     ]);
 })->name('tasks.show');
